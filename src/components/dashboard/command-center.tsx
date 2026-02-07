@@ -16,7 +16,7 @@ export default function CommandCenter() {
   const router = useRouter();
   const [incidents] = useState<Incident[]>(mockIncidents);
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(
-    null
+    () => (mockIncidents.length > 0 ? mockIncidents[0] : null)
   );
 
   useEffect(() => {
@@ -24,13 +24,6 @@ export default function CommandCenter() {
       router.push('/login');
     }
   }, [user, router]);
-
-  useEffect(() => {
-    if (incidents.length > 0 && !selectedIncident) {
-      setSelectedIncident(incidents[0]);
-    }
-  }, [incidents, selectedIncident]);
-
 
   if (!user) {
     return (

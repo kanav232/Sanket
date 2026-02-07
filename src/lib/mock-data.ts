@@ -30,9 +30,11 @@ export const mockIncidents: Incident[] = [
     coordinates: { lat: 34.0522, lng: -118.2437 },
     timestamp: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
     confidence: 95,
+
     posts: ['post1', 'post2', 'post3'],
     status: 'new',
     summary: 'A critical fire incident has been reported at Downtown Plaza, multiple sources confirm.',
+    validationMetrics: { postCount: 3, verifiedPostCount: 1, relevantMediaCount: 2 }
   },
   {
     id: 'INC002',
@@ -45,6 +47,7 @@ export const mockIncidents: Incident[] = [
     posts: ['post4', 'post5'],
     status: 'acknowledged',
     summary: 'Multi-vehicle accident on Highway 101 causing major traffic disruption. Emergency services on scene.',
+    validationMetrics: { postCount: 2, verifiedPostCount: 0, relevantMediaCount: 1 }
   },
   {
     id: 'INC003',
@@ -57,6 +60,7 @@ export const mockIncidents: Incident[] = [
     posts: ['post6'],
     status: 'in-progress',
     summary: 'Severe traffic congestion on Central Bridge due to an earlier accident. Authorities are managing traffic flow.',
+    validationMetrics: { postCount: 1, verifiedPostCount: 0, relevantMediaCount: 0 }
   },
   {
     id: 'INC004',
@@ -69,6 +73,7 @@ export const mockIncidents: Incident[] = [
     posts: ['post7', 'post8'],
     status: 'resolved',
     summary: 'A protest at City Hall Park has been peacefully resolved. Crowds have dispersed.',
+    validationMetrics: { postCount: 2, verifiedPostCount: 1, relevantMediaCount: 0 }
   },
   {
     id: 'INC005',
@@ -81,8 +86,9 @@ export const mockIncidents: Incident[] = [
     posts: ['post9'],
     status: 'resolved',
     summary: 'A small dumpster fire in Suburban District 5 was quickly extinguished. No injuries or major damage.',
+    validationMetrics: { postCount: 1, verifiedPostCount: 0, relevantMediaCount: 0 }
   },
-   {
+  {
     id: 'INC006',
     type: 'Accident',
     severity: 'severe',
@@ -93,5 +99,7 @@ export const mockIncidents: Incident[] = [
     posts: ['post10', 'post11', 'post12'],
     status: 'new',
     summary: 'Reports of a major collision involving a public bus at Oak and 4th. Emergency response needed.',
+    validationMetrics: { postCount: 3, verifiedPostCount: 2, relevantMediaCount: 1 }
   },
+
 ];

@@ -1,3 +1,10 @@
+
+export type ValidationMetrics = {
+  postCount: number;
+  verifiedPostCount: number;
+  relevantMediaCount: number; // Only increments if AI confidence > 0.7
+};
+
 export type Incident = {
   id: string;
   type: 'Fire' | 'Accident' | 'Congestion' | 'Public Unrest';
@@ -9,7 +16,9 @@ export type Incident = {
   posts: string[];
   status: 'new' | 'acknowledged' | 'in-progress' | 'resolved' | 'false-positive';
   summary: string;
+  validationMetrics: ValidationMetrics;
 };
+
 
 export type User = {
   name: string;

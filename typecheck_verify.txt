@@ -1,0 +1,10 @@
+
+> nextn@0.1.0 typecheck
+> tsc --noEmit
+
+src/lib/mock-data.ts(25,3): error TS2741: Property 'validationMetrics' is missing in type '{ id: string; type: "Fire"; severity: "critical"; location: string; coordinates: { lat: number; lng: number; }; timestamp: string; confidence: number; posts: string[]; status: "new"; summary: string; }' but required in type 'Incident'.
+src/lib/mock-data.ts(37,3): error TS2741: Property 'validationMetrics' is missing in type '{ id: string; type: "Accident"; severity: "severe"; location: string; coordinates: { lat: number; lng: number; }; timestamp: string; confidence: number; posts: string[]; status: "acknowledged"; summary: string; }' but required in type 'Incident'.
+src/lib/mock-data.ts(49,3): error TS2741: Property 'validationMetrics' is missing in type '{ id: string; type: "Congestion"; severity: "moderate"; location: string; coordinates: { lat: number; lng: number; }; timestamp: string; confidence: number; posts: string[]; status: "in-progress"; summary: string; }' but required in type 'Incident'.
+src/lib/mock-data.ts(61,3): error TS2741: Property 'validationMetrics' is missing in type '{ id: string; type: "Public Unrest"; severity: "moderate"; location: string; coordinates: { lat: number; lng: number; }; timestamp: string; confidence: number; posts: string[]; status: "resolved"; summary: string; }' but required in type 'Incident'.
+src/lib/mock-data.ts(73,3): error TS2741: Property 'validationMetrics' is missing in type '{ id: string; type: "Fire"; severity: "minor"; location: string; coordinates: { lat: number; lng: number; }; timestamp: string; confidence: number; posts: string[]; status: "resolved"; summary: string; }' but required in type 'Incident'.
+src/lib/mock-data.ts(85,4): error TS2741: Property 'validationMetrics' is missing in type '{ id: string; type: "Accident"; severity: "severe"; location: string; coordinates: { lat: number; lng: number; }; timestamp: string; confidence: number; posts: string[]; status: "new"; summary: string; }' but required in type 'Incident'.

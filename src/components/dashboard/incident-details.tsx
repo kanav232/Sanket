@@ -23,6 +23,7 @@ import type { Incident } from '@/lib/types';
 import { useAuth } from '@/hooks/use-auth';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 
 const severityConfig = {

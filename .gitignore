@@ -44,3 +44,16 @@ next-env.d.ts
 firebase-debug.log
 firestore-debug.log
 service-account.json
+service-account.json.bak
+
+# logs and temp output files
+build_log.txt
+out.txt
+typecheck_output.txt
+typecheck_verify.txt
+
+# local state markers
+.modified
+
+# IDE-specific
+.idx/

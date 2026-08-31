@@ -74,20 +74,57 @@ export async function processIncidentReport(input: IncidentInput) {
 
 
     // 4.2 Aggregation Check (Geospatial + Semantic)
-    let type: Incident['type'] = 'Public Alert'; // Default
+    let type: Incident['type'] = 'Unknown Disaster'; // Default
     const severity: Incident['severity'] = (classification.severity as Incident['severity']) || 'moderate';
 
     const lower = input.text.toLowerCase();
-    
-    // Categorize incident based on text keywords
-    if (lower.includes('fire') || lower.includes('blaze') || lower.includes('smoke')) type = 'Fire';
-    else if (lower.includes('accident') || lower.includes('crash') || lower.includes('hit and run')) type = 'Accident';
-    else if (lower.includes('traffic') || lower.includes('jam') || lower.includes('blocked')) type = 'Congestion';
-    else if (lower.includes('pothole') || lower.includes('pot hole') || lower.includes('crater') || lower.includes('road broken') || lower.includes('road caved')) type = 'Pothole';
-    else if (lower.includes('waterlog') || lower.includes('flood') || lower.includes('drain')) type = 'Waterlogging';
-    else if (lower.includes('wire') || lower.includes('pole') || lower.includes('electric') || lower.includes('transformer')) type = 'Electrical Hazard';
-    else if (lower.includes('animal') || lower.includes('dog') || lower.includes('cattle')) type = 'Animal Menace';
-    else if (lower.includes('collapse') || lower.includes('structure') || lower.includes('building')) type = 'Infrastructure Hazard';
+
+    // --- Disaster Categorization ---
+    if (lower.includes('flood') || lower.includes('waterlog') || lower.includes('submerged') ||
+        lower.includes('drowning') || lower.includes('washed away') || lower.includes('inundated') ||
+        lower.includes('floodwater') || lower.includes('river overflowing') || lower.includes('dam open') ||
+        lower.includes('embankment broken') || lower.includes('deluge') || lower.includes('water rising') ||
+        lower.includes('water level') || lower.includes('boat needed') || lower.includes('neck deep water')) {
+        type = 'Flood';
+    } else if (lower.includes('earthquake') || lower.includes('tremor') || lower.includes('seismic') ||
+               lower.includes('quake') || lower.includes('aftershock')) {
+        type = 'Earthquake';
+    } else if (lower.includes('landslide') || lower.includes('mudslide') || lower.includes('mud slide') ||
+               lower.includes('land slip') || lower.includes('hillside collapse')) {
+        type = 'Landslide';
+    } else if (lower.includes('cyclone') || lower.includes('hurricane') || lower.includes('typhoon') ||
+               lower.includes('storm surge') || lower.includes('windstorm') || lower.includes('tornado')) {
+        type = 'Cyclone';
+    } else if (lower.includes('collapse') || lower.includes('building fell') || lower.includes('rubble') ||
+               lower.includes('debris') || lower.includes('buried') || lower.includes('trapped under') ||
+               lower.includes('caved in') || lower.includes('roof collapsed') || lower.includes('wall collapsed') ||
+               lower.includes('pancaked') || lower.includes('structural')) {
+        type = 'Structural Collapse';
+    } else if (lower.includes('unconscious') || lower.includes('casualt') || lower.includes('dead') ||
+               lower.includes('dying') || lower.includes('severe injur') || lower.includes('medical') ||
+               lower.includes('ambulance') || lower.includes('paramedic') || lower.includes('triage') ||
+               lower.includes('no pulse') || lower.includes('critical condition')) {
+        type = 'Medical Emergency';
+    } else if (lower.includes('trapped') || lower.includes('rescue') || lower.includes('sos') ||
+               lower.includes('stranded') || lower.includes('cut off') || lower.includes('airlift') ||
+               lower.includes('helicopter') || lower.includes('marooned') || lower.includes('stuck')) {
+        type = 'Rescue Required';
+    } else if (lower.includes('food shortage') || lower.includes('starving') || lower.includes('no water') ||
+               lower.includes('supplies running out') || lower.includes('need rations') ||
+               lower.includes('no drinking water') || lower.includes('relief camp')) {
+        type = 'Supply Shortage';
+    } else if (lower.includes('no signal') || lower.includes('no network') || lower.includes('communication') ||
+               lower.includes('satellite phone') || lower.includes('blackout') || lower.includes('power grid') ||
+               lower.includes('ham radio')) {
+        type = 'Communication Failure';
+    }
+
+    // --- STRICT DISASTER FILTER ---
+    // If we couldn't match any known disaster category, drop this post entirely.
+    if (type === 'Unknown Disaster') {
+        console.log('[IncidentService] Post does not match any disaster category. Filtering out.');
+        return { status: 'ignored', reason: 'Not a recognised disaster event' };
+    }
 
     // Fetch active incidents to check proximity
     const snapshot = await db.collection('incidents')

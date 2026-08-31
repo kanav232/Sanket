@@ -13,6 +13,12 @@ async function getIncidents(): Promise<Incident[]> {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
 
+    // Always log the real error so we can debug
+    console.error('[page.tsx] ❌ Firebase fetch FAILED. Falling back to mock data.');
+    console.error('[page.tsx] Error:', errorMessage);
+    console.error('[page.tsx] GOOGLE_APPLICATION_CREDENTIALS:', process.env.GOOGLE_APPLICATION_CREDENTIALS);
+    console.error('[page.tsx] FIREBASE_SERVICE_ACCOUNT set:', !!process.env.FIREBASE_SERVICE_ACCOUNT);
+
     // Check for missing project ID or missing credential file (ENOENT)
     if (errorMessage.includes('Unable to detect a Project Id') ||
       errorMessage.includes('does not exist') ||
@@ -23,7 +29,7 @@ async function getIncidents(): Promise<Incident[]> {
       (error as any)?.code === 2) {
       console.warn('⚠️ Running in local mode: Firebase credentials not found or API disabled. Using mock data.');
     } else {
-      console.error('Error fetching incidents:', error);
+      console.error('Unhandled Firebase error:', error);
     }
     // Return mock data so the UI still works locally without credentials
     return [

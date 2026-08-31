@@ -12,7 +12,7 @@ export type PostSource = {
 
 export type Incident = {
   id: string;
-  type: 'Fire' | 'Accident' | 'Congestion' | 'Public Unrest' | 'Public Alert' | 'Pothole' | 'Waterlogging' | 'Electrical Hazard' | 'Animal Menace' | 'Infrastructure Hazard';
+  type: 'Flood' | 'Earthquake' | 'Landslide' | 'Cyclone' | 'Structural Collapse' | 'Medical Emergency' | 'Rescue Required' | 'Supply Shortage' | 'Communication Failure' | 'Unknown Disaster';
   severity: 'critical' | 'severe' | 'moderate' | 'minor';
   location: string;
   coordinates: { lat: number; lng: number };

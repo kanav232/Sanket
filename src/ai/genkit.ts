@@ -17,5 +17,5 @@ export const ai = genkit({
       baseURL: 'https://api.groq.com/openai/v1'
     })
   ],
-  model: 'groq/llama-3.1-8b-instant',
+  model: 'groq/llama3-8b-8192',
 });
